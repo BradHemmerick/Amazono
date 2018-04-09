@@ -22,8 +22,13 @@ app.use(morgan('dev'));
 app.use(cors());
 
 const userRoutes = require('./routes/account');
+const mainRoutes = require('./routes/main');
+const sellerRoutes = require('./routes/seller')
 
-app.use('/api/accounts', userRoutes);
+app.use('/api', sellerRoutes);
+app.use('/api', mainRoutes);
+app.use('/api/seller', userRoutes);
+
 
 
 app.listen(config.port, err => {

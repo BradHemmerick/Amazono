@@ -1,5 +1,6 @@
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { stat } from 'fs';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
@@ -8,10 +9,13 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
     if(localStorage.getItem('token')){
-      this.router.navigate(['/']);
-      return false;
+      return state.url.startsWith('/profile')
+      ? true
+      : (this.router.navigate(['/']), false);
     } else{
-      return true;
+      return state.url.startsWith('/profile')
+      ? (this.router.navigate(['/']), false)
+      : true
     }
   }
 
